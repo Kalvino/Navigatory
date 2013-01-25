@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span12 subnav">
+			<ul class="unstyled">
+				<li><a href="{% url explore %}">{% trans "Overview" %}</a></li>
+				<li>|</li>
+				<li><a href="{% url itineraryexamples %}" class="active">{% trans "Itinerary Examples" %}</a></li>
+				<li>|</li>
+				<li><a href="{% url sites %}">{% trans "Sites" %}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<h1 class="page-title">{% trans "ITINERARY EXAMPLES" %}</h1>
+	</div>
+	{% if example_itineraries %}
+		<div class="row-fluid">
+			<div class="span12 marbot10">
+				{% for example_itinerary in example_itineraries %}
+					<div class="span4 itinerary">
+						<a href="{% url itinerarydetails example_itinerary.pk %}">
+							<div class="header">
+								<h3>{{ example_itinerary.name }}</h3>
+							</div>
+							<div class="map">
+								{% if example_itinerary.map %}
+									<img src="{{ STATIC_URL }}{{ example_itinerary.map.thumbnail.url }}" />
+								{% endif %}
+							</div>
+							<h3>{{ example_itinerary.num_days|default_if_none:"0" }} {% trans "Days" %}</h3>
+							<p>{{ example_itinerary.description }}</p>
+						</a>
+					</div>
+					{% if forloop.counter|divisibleby:"3" and not forloop.last %}
+						</div>
+						</div>
+						<div class="row-fluid"><div class="span12 marbot10">
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+{%endblock content%}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span12 subnav">
+			<ul class="unstyled">
+				<li><a href="{% url explore %}">{% trans "Overview" %}</a></li>
+				<li>|</li>
+				<li><a href="{% url itineraryexamples %}" class="active">{% trans "Itinerary Examples" %}</a></li>
+				<li>|</li>
+				<li><a href="{% url sites %}">{% trans "Sites" %}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<a href="{% url itineraryexamples %}" class="back"></a>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span8">
+			<div class="row-fluid mapDetail">
+				<div class="row-fluid">
+					<h2 class="center">1. {% trans "Best of California" %}</h2>
+				</div>
+				<div class="row-fluid">
+					<div class="span1">
+						{% if itinerary.get_prev %}
+							<a href="{% url itinerarydetails itinerary.get_prev.pk %}" class="prevItemDetail"></a>
+						{% endif %}
+					</div>
+					<div class="span10 map">
+						<a href="#" class="lightbox">
+							{% if itinerary.map %}
+								<img src="{{ STATIC_URL }}{{ itinerary.map.url }}" />
+							{% endif %}
+						</a>
+					</div>
+					<div class="span1">
+						{% if itinerary.get_next %}
+							<a href="{% url itinerarydetails itinerary.get_next.pk %}" class="nextItemDetail"></a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span4 siteDetailPhotos">
+			<h3 class="center black">{% trans "Photos" %}</h3>
+			<div class="carousel-wrapper">
+				<div id="detailCarousel" class="carousel slide detailCarousel">
+					<!-- Carousel items -->
+					<div class="carousel-inner">
+						{% for image in itinerary.exampleitineraryimage_set.all %}
+							<div class="{% if forloop.first %}active{% endif %} item">
+								<a href="{{ STATIC_URL }}{{ image.image.url }}" >
+									<img src="{{ STATIC_URL }}{{ image.image.url }}" alt="{% trans 0Southern California0 %}" />
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+					<!-- Carousel nav -->
+					<a class="carousel-control left" href="#detailCarousel" data-slide="prev">&lsaquo;</a>
+					<a class="carousel-control right" href="#detailCarousel" data-slide="next">&rsaquo;</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12 personalize">
+			<a href="#" class="btn btn-warning drop-center">{% trans "Personalize This Itinerary" %}</a>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<h2 class="border-bottom">{% trans "Summary of Itinerary" %}</h2>
+			<table class="table table-bordered table-striped itinerary-table">
+				<tbody>
+					{% for site in itinerary.exampleitinerarysite_set.all %}
+						<tr>
+							<td><strong class="colororange">{% trans "Day" %} {{ forloop.counter }}</strong></td>
+							<td><strong>{{ site.from_site.name }} / {{ site.to_site.name }}</strong> - {{ site.exampleitinerarysitedetail_set.all.0.description }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<h2 class="border-bottom">{% trans "Explore the Map" %}</h2>
+			<div class="bigMap"><img src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&zoom=6&size=450x200&scale=2&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"></div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12 container-fluid">
+			<h2 class="border-bottom">{% trans "Details Day By Day" %}</h2>
+			{% for site in itinerary.exampleitinerarysite_set.all %}
+				<div class="row-fluid daybyday">
+					<div class="span12">
+						<div class="row-fluid">
+							<div class="span12 marbot10">
+								<h3 class="border-bottom">
+									{% trans "Day" %} {{ forloop.counter }} - {{ site.from_site.name }} / {{ site.to_site.name }} - {{ site.exampleitinerarysitedetail_set.all.0.description }}
+								</h3>
+							</div>
+						</div>
+						<div class="row-fluid">
+							{% for image in site.to_site.siteimage_set.all|slice:":1" %}
+								<div class="span3"><img src="{{ STATIC_URL }}{{ image.image.thumbnail.url }}" alt="{% trans 'Depart' %}"/></div>
+								{% empty %}
+								<div class="span3"></div>
+							{% endfor %}
+							<div class="span9">
+								<ul class="verticallist">
+									{% for detail in site.exampleitinerarysitedetail_set.all %}
+										<li>{{ detail.description }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{%endblock content%}

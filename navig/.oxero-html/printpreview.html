@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Oxero</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="style/css/basestyle.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="style/css/override.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="style/tango/skin.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="style/css/print.css" media="print"/>
+</head>
+
+<body>
+<div class="navbar">
+  <div class="navbar-inner ox-navbar-inner">
+    <div class="container">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <ul class="nav ox-nav">
+            <li class="active"><a href="#"><span>West USA</span></a></li>
+            <li><a href="#"><span>Florida</span></a></li>
+            <li><a href="#"><span>Australia</span></a></li>
+            <li><a href="#"><span>Canada</span></a></li>
+        </ul>
+        <div class="nav-collapse pull-right ox-nav-collapse">
+            <div class="top-social pull-left">
+                <a href="#" class="fb">facebook</a>
+                <a href="#" class="tw">twitter</a>
+            </div>
+            <form class="form-search pull-left ox-top-searchform">
+                <input type="text" class="input-medium search-query">
+                <button type="submit" class="btn"></button>
+            </form>
+            <form class="pull-left lang-form form-horizontal">
+                <div class="controls">
+                <label class="pull-left">Language: </label>
+                <select id="selectlang">
+                  <option value="enUS">English(Sample)</option>
+                  <option value="fr">French(Sample)</option>
+                  <option value="ph">Filipino(Sample)</option>
+                  <option value="ota">Other A(Sample)</option>
+                  <option value="otb">Other B(Sample)</option>
+                </select>
+            </div>
+            </form>
+            <ul class="pull-left login listalignleft unstyled">
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal"><span>Log In</span></a></li>
+                    <li>|</li>
+                    <li><a href="#" data-toggle="modal" data-target="#signupModal"><span>Sign Up</span></a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</div><!-- End Navbar -->
+
+<div class="container page-body-container">
+    <div class="container-fluid page-body">
+        <!-- Start Page Header -->
+        <div class="row-fluid">
+            <div class="span4 logo"><img src="images/logo.png" alt="Oxero Logo"/></div>
+            <div class="span8 mainNav">
+                <ul class="unstyled">
+                    <li><a href="index.html" class="active"><span>Home</span></a></li>
+                    <li>|</li>
+                    <li class="dropdown">
+                        <a href="explore.html"><span>Explore Region</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="explore.html">Overview</a></li>
+                            <li><a href="itineraryexamples.html">Itinerary Examples</a></li>
+                            <li><a href="sites.html">Sites</a></li>
+                        </ul>
+                    </li>
+                    <li>|</li>
+                    <li><a href="personalize.html"><span>Design Your Trip</span></a></li>
+                    <li>|</li>
+                    <li><a href="info.html">Useful Information</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row-fluid headerimage-wrapper">
+            <div class="orangeHori"></div>
+            <a href="personalize.html" class="customtrip btn btn-warning">DESIGN YOUR OWN TRIP NOW</a>
+            <img src="images/headerimage.jpg" alt="Oxero Header Image"/>
+        </div>
+        <!-- End Page Header -->
+        <!-- Start Page Content -->
+        <div class="container-fluid pagecontent-container">
+            <div class="row-fluid print-preview-links">
+                <!--<a href="#">Share</a> <a href="#">Email</a> <a href="#">Download</a>--> <a href="#" class="print" rel="print-area">Print</a>
+            </div>
+            <div class="row-fluid">
+                <div class="container-fluid print-area">
+                    <div class="page-break">
+                        <div class="row-fluid">
+                            <h1>Summary</h1>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="print-summary">
+                                <div class="span6">
+                                    <img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="Map Overview">
+                                </div>
+                                <div class="span6">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th><th></th><th>Distance</th><th>Driving</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Day 1</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day 2</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day 3</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day 4</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day 5</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day 6</td>
+                                                <td>Los Angeles to Grand Canyon</td>
+                                                <td>X km</td>
+                                                <td>X h</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td><td></td><td><strong>X Km</strong></td><td><strong>X h</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <ul class="itinerary-places unstyled" >
+                                <li>
+                                    <div class="row-fluid item-place-header">
+                                        <div class="span7">
+                                            <div class="list-header">
+                                                <h3>1. Grand Canyon B</h3>
+                                            </div>
+                                        </div>
+                                        <div class="span5">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row-fluid">
+                                        <div class="span12 list-range">
+                                            <p>
+                                                Number of days: <strong>XX</strong>
+                                                <span class="daterange">
+                                                From: <strong>XX</strong> &nbsp;&nbsp; To: <strong>XX</strong>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="item-place-details">
+                                    <div class="row-fluid">
+                                        <div class="span12 activity">
+                                            <strong>Activities:</strong>
+                                            
+                                            <ul class="added-activities unstyled">
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="Grand Canyon" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                                            </div>
+                                                            <p>
+                                                                Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-success">Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+        
+                                        </div>
+                                    </div><!-- end activity -->
+                                    <div class="row-fluid">
+                                        <div class="span12 hotel">
+                                            <strong>Hotels:</strong>
+                                            
+                                            <ul class="added-hotels unstyled">
+                                                
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Burj Al Arab</h3>
+                                                            </div>
+                                                            <p>
+                                                                At 321 m (1,053 ft), it is the fourth tallest hotel in the world. Burj Al Arab stands on an artificial island 280 m (920 ft) from Jumeirah beach and is connected to the mainland by a private curving bridge. The shape of the structure is designed to mimic the sail of a ship. Sometimes incorrectly referred to as "the world's only seven-Star hotel", its star rating has been often debated.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-success">Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end hotel -->
+                                    </div>
+                                </li><!-- end itinerary list -->
+                                <li>
+                                    <div class="row-fluid item-place-header">
+                                        <div class="span7">
+                                            <div class="list-header">
+                                                <h3>2. Grand Canyon B</h3>
+                                            </div>
+                                        </div>
+                                        <div class="span5">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row-fluid">
+                                        <div class="span12 list-range">
+                                            <p>
+                                                Number of days: <strong>XX</strong>
+                                                <span class="daterange">
+                                                From: <strong>XX</strong> &nbsp;&nbsp; To: <strong>XX</strong>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="item-place-details">
+                                    <div class="row-fluid">
+                                        <div class="span12 activity">
+                                            <strong>Activities:</strong>
+                                            
+                                            <ul class="added-activities unstyled">
+                                                
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="Grand Canyon" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                                            </div>
+                                                            <p>
+                                                                Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+        
+                                        </div>
+                                    </div><!-- end activity -->
+                                    <div class="row-fluid">
+                                        <div class="span12 hotel">
+                                            <strong>Hotels:</strong>
+                                            
+                                            <ul class="added-hotels unstyled">
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj AL Arab"/>
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Burj Al Arab</h3>
+                                                            </div>
+                                                            <p>
+                                                                At 321 m (1,053 ft), it is the fourth tallest hotel in the world. Burj Al Arab stands on an artificial island 280 m (920 ft) from Jumeirah beach and is connected to the mainland by a private curving bridge. The shape of the structure is designed to mimic the sail of a ship. Sometimes incorrectly referred to as "the world's only seven-Star hotel", its star rating has been often debated.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end hotel -->
+                                    </div>
+                                </li><!-- end itinerary list -->
+                                <li>
+                                    <div class="row-fluid item-place-header">
+                                        <div class="span7">
+                                            <div class="list-header">
+                                                <h3>3. Grand Canyon B</h3>
+                                            </div>
+                                        </div>
+                                        <div class="span5">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row-fluid">
+                                        <div class="span12 list-range">
+                                            <p>
+                                                Number of days: <strong>XX</strong>
+                                                <span class="daterange">
+                                                From: <strong>XX</strong> &nbsp;&nbsp; To: <strong>XX</strong>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="item-place-details">
+                                    <div class="row-fluid">
+                                        <div class="span12 activity">
+                                            <strong>Activities:</strong>
+                                            
+                                            <ul class="added-activities unstyled">
+                                                
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="Grand Canyon" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                                            </div>
+                                                            <p>
+                                                                Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+        
+                                        </div>
+                                    </div><!-- end activity -->
+                                    <div class="row-fluid">
+                                        <div class="span12 hotel">
+                                            <strong>Hotels:</strong>
+                                            
+                                            <ul class="added-hotels unstyled">
+                                                
+                                                <li>
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">Burj Al Arab</h3>
+                                                            </div>
+                                                            <p>
+                                                                At 321 m (1,053 ft), it is the fourth tallest hotel in the world. Burj Al Arab stands on an artificial island 280 m (920 ft) from Jumeirah beach and is connected to the mainland by a private curving bridge. The shape of the structure is designed to mimic the sail of a ship. Sometimes incorrectly referred to as "the world's only seven-Star hotel", its star rating has been often debated.
+                                                            </p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            <div class="marbot10"><span class="label label-success">Booked</span></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end hotel -->
+                                    </div>
+                                </li><!-- end itinerary list -->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <div class="row-fluid">
+                            <div class="span4"><h1>Day 1: May 6, 2012  </h1></div><div class="span8"><h2>From Grand Canyon to Monument Valley</h2></div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="row-fluid">
+                                <div class="span12 day-details-img">
+                                    
+                                                <h2 class="center">Monument Valley</h2>
+                                                <img class="center" src="http://headlandproperties.com/2-dana-point-strand.jpg" alt="Southern California"/>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="siteStats">
+                                        <h3>Description</h3>
+                                        <p>
+                                            Monument Valley's name comes from his particular rocky monuments. Indeed, the wind has eroded this plateau of Colorado over time and now only a few rocks are left, witness of the last centuries. According to the sun's position, this orange-colored rocky peaks (whom the most known are "the grand Indian chief", "the three sisters" and "The cow-boy's boot") change into a powerful ochre, showing to the visitor a shifting sight. By visiting and walking on the site, you will appreciate the immensity of this plain and the majesty of his monuments. However, you will not be the first ones: from Steven Spielberg to Stanley Kubrick, a lot of moviemakers and artists have found their inspiration there... It's your turn now. 
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="siteStats">
+                                        <h3 class="border-bottom">Activities</h3>
+                                        <div class="row-fluid">
+                                            <div class="span3 marbot10"><img src="images/sampleimage2.png" alt="Site activity"/></div>
+                                            <div class="span9 marbot10">
+                                                <p><strong>In-car tour</strong></p>
+                                                <p>
+                                                    The visitors drive on a 27km long stony way with their own vehicle. But the rocker panel should be high enough (the road is available for all kinds of cars provided that it's not been raining). This drive will walk you through the most impressive monuments and a series of wonderful.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="span3 marbot10"><img src="images/sampleimage2.png" alt="Site activity"/></div>
+                                            <div class="span9 marbot10">
+                                                <p><strong>Jeep tour with Navajo guide</strong></p>
+                                                <p>
+                                                    If you don't want to drive with your own car in the park, you can embark in the jeep of a Navajo guide who will make the visit for you. Please go to the visitor center for more information. Some tours offer the possibility to discover the southern part of the park, which is only available with a guide ($65, 2hours 30).
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="span3 marbot10"><img src="images/sampleimage2.png" alt="Site activity"/></div>
+                                            <div class="span9 marbot10">
+                                                <p><strong>Horse-riding with a Navajo guide</strong></p>
+                                                <p>
+                                                    On horseback, you will peacefully discover the park and have the feeling that you are living in a Western movie. Different rides are possible for all levels (including beginners). You will find an information point in the car park ($79-$100, 1 hour 30-2 hours 30).
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12 booked-activities">
+                                    <ul class="added-activities unstyled">
+                                        <strong>Activities Booked:</strong>
+                                        <li>
+                                            <div class="row-fluid">
+                                                <div class="span2">
+                                                    <img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="Grand Canyon" />
+                                                </div>
+                                                <div class="span10">
+                                                    <div class="header">
+                                                        <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                                    </div>
+                                                    <p>
+                                                        Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- end activity -->
+                            <div class="row-fluid">
+                                <div class="span12 booked-activities">
+                                    <ul class="added-activities unstyled">
+                                        <strong>Hotels Booked:</strong>
+                                        <li>
+                                            <div class="row-fluid">
+                                                <div class="span2">
+                                                    <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab" />
+                                                </div>
+                                                <div class="span10">
+                                                    <div class="header">
+                                                        <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                                    </div>
+                                                    <p>
+                                                        Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- end activity -->
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="siteStats">
+                                        <h3>Directions</h3>
+                                        <h4>Hotel Address:</h4>
+                                        <div class="direction-map marbot10">
+                                            <p>Address: 9283 Lovely Lane, California</p>
+                                            <img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="Map Overview">
+                                        </div>
+                                        <h4>Itinierary Direction From X to Y:</h4>
+                                        <div class="direction-map marbot10">
+                                            <p>Direction: X Hours to X Km</p>
+                                            <img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="Map Overview">
+                                        </div>
+                                        <h4>Site Location</h4>
+                                        <div class="direction-map marbot10">
+                                            <p>Direction: X Hours to X Km</p>
+                                            <img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="Map Overview">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid print-preview-links">
+                <!--<a href="#">Share</a> <a href="#">Email</a> <a href="#">Download</a>--> <a href="#" class="print" rel="print-area">Print</a>
+            </div>
+        </div>
+        <!-- End Page Content -->
+        <!-- Modals -->
+        <div class="modal hide fade" id="loginModal">
+                <div class="modal-header">
+                  <h3>Log in</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="row-fluid">
+                    <div class="span12">
+                            <form class="well side-signup">
+                                
+                                <label>Email: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Password: <input type="text" class="span12" placeholder="" /></label>
+                            
+                                <button type="submit" class="btn">Log in</button>
+                                
+                                <p>Lost password? <a href="#">Click here.</a></p>
+                            </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                </div>
+        </div>
+        <div class="modal hide fade" id="signupModal">
+                <div class="modal-header">
+                  <h3>Sign Up</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="row-fluid">
+                    <div class="span12">
+                            <form class="well side-signup">
+                                <label>First Name: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Last Name: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Email: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Country: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Password: <input type="text" class="span12" placeholder="" /></label>
+                                <label>Confirm Password: <input type="text" class="span12" placeholder="" /></label>
+                                <button type="submit" class="btn">Sign up</button>
+                            </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row-fluid"><div class="orangeHori"></div></div>
+            <div class="row-fluid footer">
+                <div class="span12">
+                    <div class="span6">
+                        <p>Copyright 2012 DriveYourHolidays All Rghts Reserved.</p>
+                    </div>
+                    <div class="span6">
+                        <ul class="unstyled listalignleft pull-right">
+                            <li><a href="aboutus.html">About Us</a></li>
+                            <li>|</li>
+                            <li><a href="advertising.html">Advertising</a></li>
+                            <li>|</li>
+                            <li><a href="contactus.html">Contact Us</a></li>
+                            <li>|</li>
+                            <li><a href="legal.html">Legal</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+</div><!-- End Page Body -->
+<!-- bootstrap js -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="script/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="script/jquery.lightbox-0.5.js"></script>
+<script type="text/javascript" src="script/jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-alert.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-button.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-carousel.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-modal.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-popover.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-tab.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-transition.js"></script>
+<script type="text/javascript" src="script/bootstrapjs/bootstrap-typeahead.js"></script>
+<script type="text/javascript" src="script/jqueryprintarea.js"></script>
+<script type="text/javascript" src="script/api.js"></script>
+</body>
+</html>

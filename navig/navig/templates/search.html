@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span10">
+			<h2>{% if not searchResults %}{% trans 'NO' %} {% endif %}{% trans 'SEARCH RESULTS FOR' %} '{{ searchQuery }}'</h2>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			{% if searchResults %}
+				<p>{{ searchResults|length }} match{{ searchResults|pluralize:"es" }} {% trans 'found' %}.</p>
+				<br />
+				<ol>
+				{% for currentSite in searchResults %}
+					<li class="liSearchResult">
+						<h3><a href="{% url sitedetails currentSite.id %}">{{ currentSite.name }}</a></h3>
+						<p>
+							{{ currentSite.description|truncatechars:177 }}
+							<a href="{% url sitedetails currentSite.id %}">View more details &rarr;</a><br/>
+						</p>
+						<p>
+							<strong>{% trans 'Regions' %}:</strong>
+							{% for currentRegion in currentSite.region.all %}{{ currentRegion }}{% if not forloop.last %}, {% endif %}{% empty %}none{% endfor %}.
+							<br />
+							<strong>{% trans 'Interests' %}:</strong>
+							{% for currentInterest in currentSite.interests.all %}{{ currentInterest }}{% if not forloop.last %}, {% endif %}{% endfor %}.
+						</p>
+					</li>
+				{% endfor %}
+				</ol>
+				<br />
+				<div class="well">
+					<p>{% trans 'This is not what you are looking for? Try again:' %}</p>
+					<form class="form-inline" action="{% url search %}" method="get">
+						<input type="text" name="query" value="{{ searchQuery }}">
+						<input type="submit" class="btn" value="Search" />
+					</form>
+				</div>
+			{% else %}
+				<div class="well">
+					<p>{% trans 'We could not find anything. Please try again:' %}</p>
+					<form class="form-inline" action="{% url search %}" method="get">
+						<input type="text" name="query" value="{{ searchQuery }}">
+						<input type="submit" class="btn" value="Search" />
+					</form>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock content %}

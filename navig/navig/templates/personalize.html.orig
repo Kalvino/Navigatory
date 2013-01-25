@@ -1,0 +1,1209 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{%block content%}
+<<<<<<< HEAD
+<div class="row-fluid">
+    <h1 class="page-title">PERSONALIZE YOUR ITINERARY</h1>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="span12 personalize">
+                <div class="itinerary-list">
+                    {% for itinerary_obj in itineraries %}
+                        <a href="{% url viewcustomitinerary itinerary_obj.pk %}" class="filled-item {% if itinerary.pk and itinerary_obj.pk == itinerary.pk %}active-list{% endif %}">
+                            <div class="header">
+                                <h3>{{ itinerary_obj.name }}</h3>
+                            </div>
+                            <div class="itinerary-map">
+                                <img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="Map of Grand Canyon">
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="addmore"><input class="btn" type="button" value="Add more" id="addmore-itineraries"></div>
+            </div>
+        </div>
+        {% if itinerary %}
+        <div class="row-fluid">
+            <div class="span12 itinerary-setting">
+                <div class="save-itinerary">
+                    <form class="form-inline date-picker">
+                        <label>Select your start date: <input type="text" id="datepicker" value="{{ itinerary.start_date|date:"m/d/Y" }}"></label>
+                    </form>
+                    <a href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#saveItinerary">Save Itinerary</a>
+                    <a href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#itinerary_rename_modal">Rename Itinerary</a>
+                    <a href="#" class="btn" id="delete_itinerary">Delete Itinerary</a>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="itinerary-summary">
+                    <h2>YOUR ITINERARY</h2>
+                    <div class="row-fluid itinerary-summary-details">
+                        <div class="span12">
+                            <iframe src="https://maps.google.com/?ie=UTF8&amp;t=m&amp;ll=37.09024,-95.712891&amp;spn=20.981197,105.380859&amp;z=4&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table table-bordered table-stripped">
+                    <thead>
+                        <td></td>
+                        <td><strong>Place</strong></td>
+                        <td width="96"><strong>#Nights</strong></td>
+                        <td><strong>Route</strong></td>
+                        <td width="94"><strong>Distance</strong><p><a href="javascript:void(0)" id="km">km</a> | <a href="javascript:void(0)" id="miles">miles</a></p></td>
+                        <td width="59"><strong>Driving</strong></td>
+                        <td width="96"></td>
+                    </thead>
+                    <tbody id="sortable-itenerary-details">
+                        {% for itinerarysite in itinerary.itinerarysite_set.all %}
+                            <tr>
+                                <input type="hidden" value="{{ itinerarysite.site.pk }}" name="itinerarysite" />
+                                <td><div class="orange">Day <span class="list-number">1</span></div></td>
+                                <td>{{ itinerarysite.site.name }}</td>
+                                <td>
+                                        <a href="javascript:void(0)" class="btn plusOne"><img src="{{ STATIC_URL }}images/plus.png" alt="Add one night"/></a>
+                                        <input type="text" class="input-smallest" value="{{ itinerarysite.nights }}">
+                                        <a href="javascript:void(0)" class="btn minusOne"><img src="{{ STATIC_URL }}images/minus.png" alt="Subtract one night"/></a>
+                                </td>
+                                <td>Los Angeles to Grand Canyon</td>
+                                <td><span class="value" title="3.00">3</span> <span class="unit">km</span></td>
+                                <td><span class="hourValue">2</span> h</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn upward"><img src="{{ STATIC_URL }}images/upward.png" alt="Push itinerary up"/></a>
+                                    <a href="javascript:void(0)" class="btn downward"><img src="{{ STATIC_URL }}images/downward.png" alt="Push itinerary down"/></a>
+                                    <a href="javascript:void(0)" class="btn deleteItem"><img src="{{ STATIC_URL }}images/delete.png" alt="Delete itinierary"/></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><!--<strong><span class="totalNights"></span></strong>--></td>
+                            <td></td>
+                            <td class="sum">
+                                <p class="extrasmall">Total:</p><strong><span class="value" title="35.90">40.90</span> <span class="unit">km</span></strong>
+                                <p class="extrasmall">Average:</p><strong><span class="value avgDistance" title="X">X</span> <span class="unit">km</span>/day</strong>
+                            </td>
+                            <td class="sum"><p class="extrasmall">Average:</p><strong><span class="avgHour">X</span> h</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div>
+                        <input type="button" class="btn btn-warning" value="Add A New Place" id="addmore-places" data-toggle="modal" data-target="#addPlace"/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <h2>Hotels and Activities</h2>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <ul class="itinerary-places unstyled" >
+                    {% for itinerarysite in itinerary.itinerarysite_set.all %}
+                        <li class="hotels_and_activities_{{ itinerarysite.site.pk }}">
+                            <div class="row-fluid item-place-header">
+                                <div class="span7">
+                                    <div class="list-header">
+                                        <h3>{{ forloop.counter }}. {{ itinerarysite.site.name }}</h3>
+                                    </div>
+                                </div>
+                                <div class="span5">
+                                    <div class="list-dates-details">
+                                        <form class="form-inline pull-right">
+                                            <input type="button" class="btn hideD toggleDisplay" value="Hide Details"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12 list-range">
+                                    <p>
+                                        Number of days: <strong class="number_of_days">{{ itinerarysite.nights }}</strong>
+                                        <span class="daterange">
+                                        From: <strong class="from_date">--</strong> &nbsp;&nbsp; To: <strong class="to_date">--</strong>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item-place-details">
+                                <div class="row-fluid">
+                                    <div class="span12 activity">
+                                        <strong>Activities:</strong>
+                                        {% if itinerarysite.itineraryplaceactivity_set.all %}
+                                            <ul class="added-activities unstyled">
+                                                {% for itineraryplaceactivity in itinerarysite.itineraryplaceactivity_set.all %}
+                                                   <li class="activity_{{ itineraryplaceactivity.activity.pk }}">
+                                                    <div class="row-fluid">
+                                                        <div class="span2">
+                                                            <img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="Grand Canyon" />
+                                                        </div>
+                                                        <div class="span8">
+                                                            <div class="header">
+                                                                <h3 class="title">{{ itineraryplaceactivity.activity.name }}</h3>
+                                                            </div>
+                                                            <p>{{ itineraryplaceactivity.activity.description }}</p>
+                                                        </div>
+                                                        <div class="span2">
+                                                            {% if itineraryplaceactivity.is_booked %}
+                                                                <div class="marbot10"><span class="label label-success">Booked</span></div>
+                                                            {% else %}
+                                                                <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                                <div class="marbot10"><a href="#{{ itineraryplaceactivity.pk }}" class="btn btn-primary book_now">Book Now</a></div>
+                                                            {% endif %}
+                                                            <div class="marbot10"><a href="#{{ itineraryplaceactivity.pk }}" class="btn remove_activity_button">Remove</a></div>
+                                                        </div>
+                                                    </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <p class="no_added_activities"><em>No activity added.</em></p>
+                                        {% endif %}
+                                       <input type="button" class="btn addmore-activity" value="Add Activity" data-toggle="modal" data-target="#addActivity"/>
+                                    </div>
+                                </div><!-- end activity -->
+
+                                <div class="row-fluid">
+                                    <div class="span12 hotel">
+                                        <strong>Hotel:</strong>
+                                        <ul class="added-hotels unstyled">
+                                            <li>
+                                                <div class="row-fluid">
+                                                    <div class="span2">
+                                                        <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj AL Arab"/>
+                                                    </div>
+                                                    <div class="span8">
+                                                        <div class="header">
+                                                            <h3 class="title">Burj Al Arab</h3>
+                                                        </div>
+                                                        <p>
+                                                            At 321 m (1,053 ft), it is the fourth tallest hotel in the world. Burj Al Arab stands on an artificial island 280 m (920 ft) from Jumeirah beach and is connected to the mainland by a private curving bridge. The shape of the structure is designed to mimic the sail of a ship. Sometimes incorrectly referred to as "the world's only seven-Star hotel", its star rating has been often debated.
+                                                        </p>
+                                                    </div>
+                                                    <div class="span2">
+                                                        <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                        <div class="marbot10"><a href="#" class="btn btn-primary">Book Now</a></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!--end hotel -->
+                            </div>
+                        </li> <!-- end itinerary list -->
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row-fluid">
+                            <div class="span12 hotel carRental">
+                                <strong>Your Car:</strong>
+
+                                <ul class="added-hotels unstyled">
+                                    <li>
+                                        <div class="row-fluid">
+                                            <div class="span2">
+                                                <img src="http://www.indiandrives.com/wp-content/uploads/2010/12/Volkswagen-Polo-Highline.jpg" alt="Volkswagen"/>
+                                            </div>
+                                            <div class="span8">
+                                                <div class="header">
+                                                    <h3 class="title">Volkswagen Polo Highline</h3>
+                                                </div>
+                                                <p>
+                                                    Cirque du Soleil ("Circus of the Sun") is a Canadian entertainment company, self-described as a "dramatic mix of circus arts and street entertainment." Based in Montreal, Quebec, Canada, and located in the inner-city area of Saint-Michel, it was founded in Baie-Saint-Paul in 1984 by two former street performers, Guy Lalibert&#233; and Gilles Ste-Croix
+                                                </p>
+                                            </div>
+                                            <div class="span2">
+                                                <div class="marbot10"><span class="label label-important">Not Booked</span></div>
+                                                <div class="marbot10"><a href="#" class="btn btn-primary">Book Now</a></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <br />
+                            </div>
+        </div><!--end car -->
+       <div class="row-fluid">
+            <div class="print-itinerary">
+                <br />
+                        <a href="{% url printpreview itinerary.pk %}" class="btn btn-warning">Print This Itinerary</a>
+                <br /><br /><br />
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- Modals -->
+<div class="modal hide fade" id="saveItinerary">
+                <div class="modal-header">
+                  <h3>Save Itinerary</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="row-fluid">
+                    <div class="span6">
+                            <form class="well side-signup" id="personalize_signup_form">
+                                <h3>Sign up to save your itinerary.</h3>
+
+                                <label>First Name: <input name="first_name" type="text" class="span12" placeholder="" /></label>
+                                <label>Last Name: <input name="last_name" type="text" class="span12" placeholder="" /></label>
+                                <label>Email: <input name="email" type="text" class="span12" placeholder="" /></label>
+                                <label>Country: <input name="country" type="text" class="span12" placeholder="" /></label>
+                                <label>Password: <input name="password" type="password" class="span12" placeholder="" /></label>
+                                <label>Confirm Password: <input name="confirm_password" type="password" class="span12" placeholder="" /></label>
+                                <button type="submit" class="btn">Sign up</button>
+                            </form>
+
+                            <div class="registration_completed">
+                                <p>You have successfully completed the sign up process. Please check your inbox for your confirmation email.</p>
+                            </div>
+                    </div>
+                    <div class="span6">
+                            <form class="well side-signup" id="personalize_login_form">
+                                <h3>Already a member? Sign in.</h3>
+
+                                <label>Email: <input name="email" type="text" class="span12" placeholder="" /></label>
+                                <label>Password: <input name="password" type="password" class="span12" placeholder="" /></label>
+
+                                <button type="submit" class="btn">Log in</button>
+
+                                <p>Lost password? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#resetPasswordModal">Click here.</a></p>
+                            </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+        </div>
+        <div class="modal hide fade" id="chooseItineraryPrefrences">
+                <div class="modal-header">
+                  <h3>Start a new Itinerary</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="row-fluid">
+                    <a class="btn span4" data-toggle="modal" data-dismiss="modal" data-target="#recommendModal"><span><strong>Recommend me and itinerary based on my tarveling preferences</strong></span><img src="{{ STATIC_URL }}images/recommendimage.png" alt="Recommend me an itinerary"/></a>
+                    <a class="btn span4" data-toggle="modal" data-dismiss="modal" data-target="#typicalModal"><span><strong>Use a typical itinerary as a starting base</strong></span><img src="{{ STATIC_URL }}images/useexample.png" alt="Use existing itinerary"/></a>
+                    <a class="btn span4" href="#" id="manually_create_itinerary"><span><strong>I will define the itinerary myself by manually adding the sites</strong></span><img src="{{ STATIC_URL }}images/manual.png" alt="Create custom itinerary"/></a>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+        </div>
+        <div class="modal hide fade" id="recommendModal">
+            <div class="modal-header">
+                <h3>Recommend Itineraries</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span6 marbot10">
+                        <div class="modal-body-header marbot10">
+                            <h3>Length of your trip</h3>
+                        </div>
+                        <div>
+                            <form class="form-inline">
+                                <a href="javascript:void(0)" class="btn plusOne"><img src="{{ STATIC_URL }}images/plus.png" alt="Add one night"/></a>
+                                <input type="text" id="length_of_trip" class="input-smallest" value="1">
+                                <a href="javascript:void(0)" class="btn minusOne"><img src="{{ STATIC_URL }}images/minus.png" alt="Subtract one night"/></a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="span6 marbot10">
+                        <div class="modal-body-header marbot10">
+                            <h3>Starting Point</h3>
+                        </div>
+                        <div>
+                            <form class="form-inline">
+                                <select id="starting_point">
+                                    <optgroup>
+                                        {% for starting_point in airport_sites %}
+                                        <option value="{{ starting_point.pk }}">{{ starting_point.name }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6 marbot10">
+                        <div class="modal-body-header marbot10">
+                          <h3>Driving Preference</h3>
+                        </div>
+                        <div class="drivingSlider">
+
+                            <div id="slider"></div>
+                            <!--<div class="sliderLabel">
+                                <p class="pull-left">Shorter drives, less sites</p>
+                                <p class="pull-right">Longer drives, more sites</p>
+                            </div>-->
+                            <p id="drivePref"></p>
+                        </div>
+                    </div>
+                    <div class="span6 marbot10">
+                        <div class="modal-body-header marbot10">
+                            <h3>Ending Point</h3>
+                        </div>
+                        <div>
+                            <form class="form-inline">
+                                <select id="ending_point">
+                                    <optgroup>
+                                        {% for ending_point in airport_sites %}
+                                        <option value="{{ ending_point.pk }}">{{ ending_point.name }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="span12 marbot10">
+                      <div class="modal-body-header marbot10">
+                          <h3>Key places I absolutely want to visit</h3>
+                      </div>
+                      <div class="keyPlacesWrap">
+                        <ul class="thumbnails">
+                            {% for site in sites %}
+                            <li class="span4">
+                              <div class="thumbnail">
+                                <img src="{{ STATIC_URL }}{{ site.map.thumbnail.url }}" alt="Key place image">
+                                <h5>{{ site }}</h5>
+                                <div class="btn-group" data-toggle="buttons-checkbox">
+                                    <button class="btn " value="{{ site.pk }}">Visit</button>
+                                </div>
+                              </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+              <a href="#" class="btn btn-primary" id="recommend_me_itineraries">Recommend Me Itineraries</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="typicalModal">
+            <div class="modal-header">
+              <h3>Itinerary Examples</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span12 marbot10">
+                        {% for example_itinerary in example_itineraries %}
+                        <div class="span4 itinerary">
+                            <a href="{% url itinerarydetails example_itinerary.pk %}">
+                                <div class="header">
+                                    <h3>{{ example_itinerary.name }}</h3>
+                                </div>
+                                <div class="map">
+                                    {% if example_itinerary.map %}
+                                        <img src="{{ STATIC_URL }}{{ example_itinerary.map.thumbnail.url }}" />
+                                    {% endif %}
+                                </div>
+                                <h3>{{ example_itinerary.num_days|default_if_none:"0" }} Days</h3>
+                                <p>{{ example_itinerary.description }}</p>
+                            </a>
+                            <input id="use_itinerary_{{ example_itinerary.id }}" type="button" class="btn use_itinerary" value="Use Itinerary"/>
+                        </div>
+
+                        {% if forloop.counter|divisibleby:"3" and not forloop.last %}
+                            </div></div>
+                            <div class="row-fluid"><div class="span12 marbot10">
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+
+        <div class="modal hide fade" id="recommendedItineraryModal">
+            <div class="modal-header">
+              <h3>Recommended Itineraries</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span12 marbot10"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+
+        <div class="modal hide fade" id="addActivity">
+            <div class="modal-header">
+                <h3>We recommend you these activities at Grand Canyon</h3>
+            </div>
+            <div class="modal-body">
+                <p class="font-size13">Book in advance to enjoy the lowest price on Internet, skip lines at the entrance and guarantee your seat.<p>
+                <ul class="add-activity-list unstyled"></ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+            </div>
+       </div>
+        <div class="modal hide fade" id="addPlace">
+            <div class="modal-header">
+              <h3>Add These Places</h3>
+            </div>
+            <div class="modal-body">
+                <form id="new_places_form">
+                    {% for site in sites %}
+                        <label class="checkbox">
+                            <input type="checkbox" name="site" value="{{ site.pk }}" />
+                            <img src="{{ STATIC_URL }}{{ site.map.thumbnail.url }}" alt="{{ site.name }}"/>
+                            <h4 class="black">{{ site.name }}</h4>
+                        </label>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+              <a href="#" class="btn btn-primary" id="add_places">Add Places</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="addHotels">
+            <div class="modal-header">
+                <h3>We recommend you these hotels at Grand Canyon</h3>
+            </div>
+            <div class="modal-body">
+                <p class="font-size13">Book in advance to enjoy the lowest price on Internet, skip lines at the entrance and guarantee your seat.<p>
+                <ul class="add-activity-list unstyled">
+                    <li>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                <div class="hotel-carousel-wrapper">
+                                    <div id="name1-hotelCarousel" class="carousel slide hotelCarousel">
+                                        <!-- Carousel items -->
+                                        <div class="carousel-inner">
+                                          <div class="active item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name1-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab"/></a></div>
+                                          <div class="item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name1-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="Burj Al Arab Suite"/></a></div>
+                                          <div class="item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name1-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="Burj Al Arab bed" /></a></div>
+                                        </div>
+                                        <!-- Carousel nav -->
+                                        <a class="carousel-control left" href="#name1-hotelCarousel" data-slide="prev">&lsaquo;</a>
+                                        <a class="carousel-control right" href="#name1-hotelCarousel" data-slide="next">&rsaquo;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span7">
+                                <div class="header">
+                                    <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                    <h3 class="price">From: <strong>$70.00</strong> per Night</h3>
+                                </div>
+                                <p>
+                                    Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                </p>
+                                <a href="#" class="btn btn-primary">Add</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                <div class="hotel-carousel-wrapper">
+                                    <div id="name2-hotelCarousel" class="carousel slide hotelCarousel">
+                                        <!-- Carousel items -->
+                                        <div class="carousel-inner">
+                                            <div class="active item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name2-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="Burj Al Arab bed"/></a></div>
+                                            <div class="item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name2-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab"/></a></div>
+                                            <div class="item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name2-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="Burj Al Arab suite"/></a></div>
+
+                                        </div>
+                                        <!-- Carousel nav -->
+                                        <a class="carousel-control left" href="#name2-hotelCarousel" data-slide="prev">&lsaquo;</a>
+                                        <a class="carousel-control right" href="#name2-hotelCarousel" data-slide="next">&rsaquo;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span7">
+                                <div class="header">
+                                    <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                    <h3 class="price">From: <strong>$70.00</strong> per Night</h3>
+                                </div>
+                                <p>
+                                    Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                </p>
+                                <a href="#" class="btn btn-primary">Add</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                <div class="hotel-carousel-wrapper">
+                                    <div id="name3-hotelCarousel" class="carousel slide hotelCarousel">
+                                        <!-- Carousel items -->
+                                        <div class="carousel-inner">
+                                            <div class="active item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name3-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="Burj Al Arab suite" /></a></div>
+                                            <div class="item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name3-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="Burj Al Arab" /></a></div>
+                                            <div class="item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name3-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="Burj Al Arab bed"/></a></div>
+                                        </div>
+                                        <!-- Carousel nav -->
+                                        <a class="carousel-control left" href="#name3-hotelCarousel" data-slide="prev">&lsaquo;</a>
+                                        <a class="carousel-control right" href="#name3-hotelCarousel" data-slide="next">&rsaquo;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span7">
+                                <div class="header">
+                                    <h3 class="title">Mysteries by Cirque de Soleil</h3>
+                                    <h3 class="price">From: <strong>$70.00</strong> per Night</h3>
+                                </div>
+                                <p>
+                                    Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert.
+                                </p>
+                                <a href="#" class="btn btn-primary">Add</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+            </div>
+       </div>`
+        <div class="modal hide fade" id="itinerary_rename_modal">
+                <div class="modal-header">
+                  <h3>Rename Itinerary</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="row-fluid">
+                    <div class="span12">
+                            <form class="well side-signup" id="itinerary_rename_form">
+                                <label>Itinerary Name: <input type="text" class="span12" placeholder="" name="name" /></label>
+                                <button type="submit" class="btn">Rename</button>
+                            </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+        </div>
+{%endblock content%}
+=======
+	<div class="row-fluid">
+		<h1 class="page-title">{% trans "PERSONALIZE YOUR ITINERARY" %}</h1>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="row-fluid">
+				<div class="span12 personalize">
+					<div class="itinerary-list">
+						{% for itinerary_obj in itineraries %}
+							<a href="{% url viewcustomitinerary itinerary_obj.pk %}" class="filled-item {% if itinerary.pk and itinerary_obj.pk == itinerary.pk %}active-list{% endif %}">
+								<div class="header">
+									<h3>{{ itinerary_obj.name }}</h3>
+								</div>
+								<div class="itinerary-map">
+									<img style="-webkit-user-select: none" src="http://maps.googleapis.com/maps/api/staticmap?center=Grand+Canyon+AZ&amp;zoom=5&amp;size=600x300&amp;maptype=roadmap&amp;sensor=false" alt="{% trans 'Map of Grand Canyon' %}">
+								</div>
+							</a>
+						{% endfor %}
+					</div>
+					<div class="addmore"><input class="btn" type="button" value="{% trans 'Add more' %}" id="addmore-itineraries"></div>
+					<br />
+				</div>
+			</div>
+			{% if itinerary %}
+				<div class="row-fluid">
+					<div class="span12 itinerary-setting">
+						<div class="save-itinerary">
+							<form class="form-inline date-picker">
+								<label>{% trans "Select your start date" %}: <input type="text" id="datepicker" value="{{ itinerary.start_date|date:"m/d/Y" }}"></label>
+							</form>
+							<a href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#saveItinerary">{% trans "Save Itinerary" %}</a>
+							<a href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#itinerary_rename_modal">{% trans "Rename Itinerary" %}</a>
+							<a href="#" class="btn" id="delete_itinerary">{% trans "Delete Itinerary" %}</a>
+						</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="itinerary-summary">
+							<h2>{% trans "YOUR ITINERARY" %}</h2>
+							<div class="row-fluid itinerary-summary-details">
+								<div class="span12">
+									<iframe src="https://maps.google.com/?ie=UTF8&amp;t=m&amp;ll=37.09024,-95.712891&amp;spn=20.981197,105.380859&amp;z=4&amp;output=embed"></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<table class="table table-bordered table-stripped">
+							<thead>
+								<td></td>
+								<td><strong>{% trans "Place" %}</strong></td>
+								<td width="96"><strong>{% trans "# Nights" %}</strong></td>
+								<td><strong>{% trans "Route" %}</strong></td>
+								<td width="94"><strong>{% trans "Distance" %}</strong><p><a href="javascript:void(0)" id="km">{% trans "km" %}</a> | <a href="javascript:void(0)" id="miles">{% trans "miles" %}</a></p></td>
+								<td width="59"><strong>{% trans "Driving" %}</strong></td>
+								<td width="96"></td>
+							</thead>
+							<tbody id="sortable-itenerary-details">
+								{% for itinerarysite in itinerary.itinerarysite_set.all %}
+									<tr>
+										<input type="hidden" value="{{ itinerarysite.site.pk }}" name="itinerarysite" />
+										<td><div class="orange">{% trans 'Day' %} <span class="list-number">1</span></div></td>
+										<td>{{ itinerarysite.site.name }}</td>
+										<td>
+											<a href="javascript:void(0)" class="btn plusOne"><img src="{{ STATIC_URL }}images/plus.png" alt="{% trans 'Add one night' %}"/></a>
+											<input type="text" class="input-smallest" value="{{ itinerarysite.nights }}">
+											<a href="javascript:void(0)" class="btn minusOne"><img src="{{ STATIC_URL }}images/minus.png" alt="{% trans 'Subtract one night' %}"/></a>
+										</td>
+										<td>{% trans "Los Angeles to Grand Canyon" %}</td>
+										<td><span class="value" title="3.00">3</span> <span class="unit">{% trans "km" %}</span></td>
+										<td><span class="hourValue">2</span> h</td>
+										<td>
+											<a href="javascript:void(0)" class="btn upward"><img src="{{ STATIC_URL }}images/upward.png" alt="{% trans 'Push itinerary up' %}"/></a>
+											<a href="javascript:void(0)" class="btn downward"><img src="{{ STATIC_URL }}images/downward.png" alt="{% trans 'Push itinerary down' %}"/></a>
+											<a href="javascript:void(0)" class="btn deleteItem"><img src="{{ STATIC_URL }}images/delete.png" alt="{% trans 'Delete itinierary' %}"/></a>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><!--<strong><span class="totalNights"></span></strong>--></td>
+									<td></td>
+									<td class="sum">
+										<p class="extrasmall">{% trans "Total" %}:</p><strong><span class="value" title="35.90">40.90</span> <span class="unit">{% trans "km" %}</span></strong>
+										<p class="extrasmall">{% trans "Average" %}:</p><strong><span class="value avgDistance" title="X">X</span> <span class="unit">{% trans "km" %}</span>/{% trans "day" %}</strong>
+									</td>
+									<td class="sum"><p class="extrasmall">{% trans "Average" %}:</p><strong><span class="avgHour">X</span> h</strong></td>
+									<td></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div>
+						<input type="button" class="btn btn-warning" value="{% trans 'Add A New Place' %}" id="addmore-places" data-toggle="modal" data-target="#addPlace"/>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<h2>{% trans "Hotels and Activities" %}</h2>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+					<ul class="itinerary-places unstyled" >
+						{% for itinerarysite in itinerary.itinerarysite_set.all %}
+							<li class="hotels_and_activities_{{ itinerarysite.site.pk }}">
+								<div class="row-fluid item-place-header">
+									<div class="span7">
+										<div class="list-header">
+											<h3>{{ forloop.counter }}. {{ itinerarysite.site.name }}</h3>
+										</div>
+									</div>
+									<div class="span5">
+										<div class="list-dates-details">
+											<form class="form-inline pull-right">
+												<input type="button" class="btn hideD toggleDisplay" value="{% trans 'Hide Details' %}"/>
+											</form>
+										</div>
+									</div>
+								</div>
+								<div class="row-fluid">
+									<div class="span12 list-range">
+										<p>
+											{% trans "Number of days" %}: <strong class="number_of_days">{{ itinerarysite.nights }}</strong>
+											<span class="daterange">
+												{% trans "From" %}: <strong class="from_date">--</strong> &nbsp;&nbsp; {% trans "To" %}: <strong class="to_date">--</strong>
+											</span>
+										</p>
+									</div>
+								</div>
+								<div class="item-place-details">
+									<div class="row-fluid">
+										<div class="span12 activity">
+											<strong>Activities:</strong>
+											{% if itinerarysite.itineraryplaceactivity_set.all %}
+												<ul class="added-activities unstyled">
+													{% for itineraryplaceactivity in itinerarysite.itineraryplaceactivity_set.all %}
+														<li class="activity_{{ itineraryplaceactivity.activity.pk }}">
+															<div class="row-fluid">
+																<div class="span2">
+																	<img src="http://1.bp.blogspot.com/-9Al7TmL0wYM/T3XcsDG1wEI/AAAAAAAAEno/-DYt-hd08nQ/s320/Grand_Canyon_1.jpg" alt="{% trans 'Grand Canyon' %}" />
+																</div>
+																<div class="span8">
+																	<div class="header">
+																		<h3 class="title">{{ itineraryplaceactivity.activity.name }}</h3>
+																	</div>
+																	<p>{{ itineraryplaceactivity.activity.description }}</p>
+																</div>
+																<div class="span2">
+																	{% if itineraryplaceactivity.is_booked %}
+																		<div class="marbot10"><span class="label label-success">{% trans "Booked" %}</span></div>
+																	{% else %}
+																		<div class="marbot10"><span class="label label-important">{% trans "Not Booked" %}</span></div>
+																		<div class="marbot10"><a href="#{{ itineraryplaceactivity.pk }}" class="btn btn-primary book_now">{% trans "Book Now" %}</a></div>
+																	{% endif %}
+																	<div class="marbot10"><a href="#{{ itineraryplaceactivity.pk }}" class="btn remove_activity_button">{% trans "Remove" %}</a></div>
+																</div>
+															</div>
+														</li>
+													{% endfor %}
+												</ul>
+											{% else %}
+												<p class="no_added_activities"><em>{% trans "No activity added" %}.</em></p>
+											{% endif %}
+											<input type="button" class="btn addmore-activity" value="{% trans 'Add Activity' %}" data-toggle="modal" data-target="#addActivity"/>
+										</div>
+									</div>
+									<!-- End activity -->
+									<div class="row-fluid">
+										<div class="span12 hotel">
+											<strong>{% trans "Hotel" %}:</strong>
+											<ul class="added-hotels unstyled">
+												<li>
+													<div class="row-fluid">
+														<div class="span2">
+															<img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="{% trans 'Burj Al Arab' %}"/>
+														</div>
+														<div class="span8">
+															<div class="header">
+																<h3 class="title">{% trans "Burj Al Arab" %}</h3>
+															</div>
+															<p>
+																{% blocktrans %}
+																	At 321 m (1,053 ft), it is the fourth tallest hotel in the world. Burj Al Arab stands on an artificial island 280 m (920 ft) from Jumeirah beach and is connected to the mainland by a private curving bridge. The shape of the structure is designed to mimic the sail of a ship. Sometimes incorrectly referred to as "the world's only seven-Star hotel", its star rating has been often debated.
+																{% endblocktrans %}
+															</p>
+														</div>
+														<div class="span2">
+															<div class="marbot10"><span class="label label-important">{% trans "Not Booked" %}</span></div>
+															<div class="marbot10"><a href="#" class="btn btn-primary">{% trans "Book Now" %}</a></div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<!-- End hotel -->
+								</div>
+							</li>
+							<!-- End itinerary list -->
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+				<div class="row-fluid">
+				<div class="span12 hotel carRental">
+					<strong>{% trans "Your Car" %}:</strong>
+					<ul class="added-hotels unstyled">
+						<li>
+							<div class="row-fluid">
+								<div class="span2">
+									<img src="http://www.indiandrives.com/wp-content/uploads/2010/12/Volkswagen-Polo-Highline.jpg" alt="{% trans 'Volkswagen' %}"/>
+								</div>
+								<div class="span8">
+									<div class="header">
+										<h3 class="title">{% trans "Volkswagen Polo Highline" %}</h3>
+									</div>
+									<p>
+										{% blocktrans %}
+											Cirque du Soleil ("Circus of the Sun") is a Canadian entertainment company, self-described as a "dramatic mix of circus arts and street entertainment." Based in Montreal, Quebec, Canada, and located in the inner-city area of Saint-Michel, it was founded in Baie-Saint-Paul in 1984 by two former street performers, Guy Lalibert&#233; and Gilles Ste-Croix.
+										{% endblocktrans %}
+									</p>
+								</div>
+								<div class="span2">
+									<div class="marbot10"><span class="label label-important">{% trans "Not Booked" %}</span></div>
+									<div class="marbot10"><a href="#" class="btn btn-primary">{% trans "Book Now" %}</a></div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<br />
+				</div>
+			</div>
+				<!-- End car -->
+				<div class="row-fluid">
+					<div class="print-itinerary">
+						<br />
+						<a href="{% url printpreview %}" class="btn btn-warning">{% trans "Print This Itinerary" %}</a>
+						<br /><br /><br />
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<!-- Modals -->
+	<div class="modal hide fade" id="saveItinerary">
+		<div class="modal-header">
+			<h3>{% trans "Save Itinerary" %}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<div class="span6">
+					<form class="well side-signup" id="personalize_signup_form">
+						<h3>{% trans "Sign up to save your itinerary." %}</h3>
+						<label>{% trans "First Name" %}: <input name="first_name" type="text" class="span12" placeholder="" /></label>
+						<label>{% trans "Last Name" %}: <input name="last_name" type="text" class="span12" placeholder="" /></label>
+						<label>{% trans "Email" %}: <input name="email" type="text" class="span12" placeholder="" /></label>
+						<label>{% trans "Country" %}: <input name="country" type="text" class="span12" placeholder="" /></label>
+						<label>{% trans "Password" %}: <input name="password" type="password" class="span12" placeholder="" /></label>
+						<label>{% trans "Confirm Password" %}: <input name="confirm_password" type="password" class="span12" placeholder="" /></label>
+						<button type="submit" class="btn">{% trans "Sign up" %}</button>
+					</form>
+					<div class="registration_completed">
+					<p>{% trans "You have successfully completed the sign up process. Please check your inbox for your confirmation email." %}</p>
+					</div>
+				</div>
+				<div class="span6">
+					<form class="well side-signup" id="personalize_login_form">
+						<h3>{% trans "Already a member? Sign in." %}</h3>
+						<label>{% trans "Email" %}: <input name="email" type="text" class="span12" placeholder="" /></label>
+						<label>{% trans "Password" %}: <input name="password" type="password" class="span12" placeholder="" /></label>
+						<button type="submit" class="btn">{% trans "Log in" %}</button>
+						<p>{% trans "Lost password" %}? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#resetPasswordModal">{% trans "Click here" %}.</a></p>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="chooseItineraryPrefrences">
+		<div class="modal-header">
+			<h3>{% trans "Start a new Itinerary" %}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<a class="btn span4" data-toggle="modal" data-dismiss="modal" data-target="#recommendModal">
+					<span>
+						<strong>{% trans "Recommend me and itinerary based on my tarveling preferences" %}</strong>
+					</span>
+					<img src="{{ STATIC_URL }}images/recommendimage.png" alt="{% trans 'Recommend me an itinerary' %}"/>
+				</a>
+				<a class="btn span4" data-toggle="modal" data-dismiss="modal" data-target="#typicalModal">
+					<span>
+						<strong>{% trans "Use a typical itinerary as a starting base" %}</strong>
+					</span>
+					<img src="{{ STATIC_URL }}images/useexample.png" alt="{% trans 'Use existing itinerary' %}"/>
+				</a>
+				<a class="btn span4" href="#" id="manually_create_itinerary">
+					<span>
+						<strong>{% trans "I will define the itinerary myself by manually adding the sites" %}</strong>
+					</span>
+					<img src="{{ STATIC_URL }}images/manual.png" alt="{% trans 'Create custom itinerary' %}"/>
+				</a>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="recommendModal">
+		<div class="modal-header">
+			<h3>{% trans "Recommend Itineraries" %}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<div class="span6 marbot10">
+					<div class="modal-body-header marbot10">
+						<h3>{% trans "Length of your trip" %}</h3>
+					</div>
+					<div>
+						<form class="form-inline">
+							<a href="javascript:void(0)" class="btn plusOne"><img src="{{ STATIC_URL }}images/plus.png" alt="{% trans 'Add one night' %}"/></a>
+							<input type="text" id="length_of_trip" class="input-smallest" value="1">
+							<a href="javascript:void(0)" class="btn minusOne"><img src="{{ STATIC_URL }}images/minus.png" alt="{% trans 'Subtract one night' %}"/></a>
+						</form>
+					</div>
+				</div>
+				<div class="span6 marbot10">
+					<div class="modal-body-header marbot10">
+						<h3>{% trans "Starting Point" %}</h3>
+					</div>
+					<div>
+						<form class="form-inline">
+							<select id="starting_point">
+								<optgroup>
+									{% for starting_point in airport_sites %}
+										<option value="{{ starting_point.pk }}">{{ starting_point.name }}</option>
+									{% endfor %}
+								</optgroup>
+							</select>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6 marbot10">
+					<div class="modal-body-header marbot10">
+						<h3>{% trans "Driving Preference" %}</h3>
+					</div>
+					<div class="drivingSlider">
+						<div id="slider"></div>
+						<!--
+						<div class="sliderLabel">
+						<p class="pull-left">Shorter drives, less sites</p>
+						<p class="pull-right">Longer drives, more sites</p>
+						</div>
+						-->
+						<p id="drivePref"></p>
+					</div>
+				</div>
+				<div class="span6 marbot10">
+					<div class="modal-body-header marbot10">
+						<h3>{% trans "Ending Point" %}</h3>
+					</div>
+					<div>
+						<form class="form-inline">
+							<select id="ending_point">
+								<optgroup>
+									{% for ending_point in airport_sites %}
+										<option value="{{ ending_point.pk }}">{{ ending_point.name }}</option>
+									{% endfor %}
+								</optgroup>
+							</select>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12 marbot10">
+					<div class="modal-body-header marbot10">
+						<h3>{% trans "Key places I absolutely want to visit" %}</h3>
+					</div>
+					<div class="keyPlacesWrap">
+						<ul class="thumbnails">
+							{% for site in sites %}
+								<li class="span4">
+									<div class="thumbnail">
+										<img src="{{ STATIC_URL }}{{ site.map.thumbnail.url }}" alt="{% trans 'Key place image' %}">
+										<h5>{{ site }}</h5>
+										<div class="btn-group" data-toggle="buttons-checkbox">
+											<button class="btn" value="{{ site.pk }}">{% trans "Visit" %}</button>
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+			<a href="#" class="btn btn-primary" id="recommend_me_itineraries">{% trans "Recommend Me Itineraries" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="typicalModal">
+		<div class="modal-header">
+			<h3>{% trans "Itinerary Examples" %}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<div class="span12 marbot10">
+					{% for example_itinerary in example_itineraries %}
+						<div class="span4 itinerary">
+							<a href="{% url itinerarydetails example_itinerary.pk %}">
+							<div class="header">
+								<h3>{{ example_itinerary.name }}</h3>
+							</div>
+							<div class="map">
+								{% if example_itinerary.map %}
+									<img src="{{ STATIC_URL }}{{ example_itinerary.map.thumbnail.url }}" />
+								{% endif %}
+							</div>
+							<h3>{{ example_itinerary.num_days|default_if_none:"0" }} {% trans "Days" %}</h3>
+							<p>{{ example_itinerary.description }}</p>
+							</a>
+							<input id="use_itinerary_{{ example_itinerary.id }}" type="button" class="btn use_itinerary" value="{% trans 'Use Itinerary' %}"/>
+						</div>
+						{% if forloop.counter|divisibleby:"3" and not forloop.last %}
+							</div>
+							</div>
+							<div class="row-fluid"><div class="span12 marbot10">
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="addActivity">
+		<div class="modal-header">
+			<h3>{% trans "We recommend you these activities at Grand Canyon" %}</h3>
+		</div>
+		<div class="modal-body">
+			<p class="font-size13">{% trans "Book in advance to enjoy the lowest price on Internet, skip lines at the entrance and guarantee your seat." %}<p>
+			<ul class="add-activity-list unstyled"></ul>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="addPlace">
+		<div class="modal-header">
+			<h3>{% trans "Add These Places" %}</h3>
+		</div>
+		<div class="modal-body">
+			<form id="new_places_form">
+				{% for site in sites %}
+					<label class="checkbox">
+						<input type="checkbox" name="site" value="{{ site.pk }}" />
+						<img src="{{ STATIC_URL }}{{ site.map.thumbnail.url }}" alt="{{ site.name }}"/>
+						<h4 class="black">{{ site.name }}</h4>
+					</label>
+				{% endfor %}
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+			<a href="#" class="btn btn-primary" id="add_places">{% trans "Add Places" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="addHotels">
+		<div class="modal-header">
+			<h3>{% trans "We recommend you these hotels at Grand Canyon" %}</h3>
+		</div>
+		<div class="modal-body">
+			<p class="font-size13">{% trans "Book in advance to enjoy the lowest price on Internet, skip lines at the entrance and guarantee your seat." %}"<p>
+			<ul class="add-activity-list unstyled">
+				<li>
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="hotel-carousel-wrapper">
+								<div id="name1-hotelCarousel" class="carousel slide hotelCarousel">
+									<!-- Carousel items -->
+									<div class="carousel-inner">
+										<div class="active item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name1-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="{% trans 'Burj Al Arab' %}"/></a></div>
+										<div class="item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name1-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="{% trans 'Burj Al Arab Suite' %}"/></a></div>
+										<div class="item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name1-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="{% trans 'Burj Al Arab bed' %}" /></a></div>
+									</div>
+									<!-- Carousel nav -->
+									<a class="carousel-control left" href="#name1-hotelCarousel" data-slide="prev">&lsaquo;</a>
+									<a class="carousel-control right" href="#name1-hotelCarousel" data-slide="next">&rsaquo;</a>
+								</div>
+							</div>
+						</div>
+						<div class="span7">
+							<div class="header">
+								<h3 class="title">{% trans "Mysteries by Cirque de Soleil" %}"</h3>
+								<h3 class="price">{% trans "From" %}: <strong>$70.00</strong> {% trans "per Night" %}</h3>
+							</div>
+							<p>
+								{% trans "Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert." %}
+							</p>
+							<a href="#" class="btn btn-primary">{% trans "Add" %}</a>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="hotel-carousel-wrapper">
+								<div id="name2-hotelCarousel" class="carousel slide hotelCarousel">
+									<!-- Carousel items -->
+									<div class="carousel-inner">
+										<div class="active item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name2-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="{% trans 'Burj Al Arab bed' %}"/></a></div>
+										<div class="item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name2-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="{% trans 'Burj Al Arab' %}"/></a></div>
+										<div class="item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name2-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="{% trans 'Burj Al Arab suite' %}"/></a></div>
+									</div>
+									<!-- Carousel nav -->
+									<a class="carousel-control left" href="#name2-hotelCarousel" data-slide="prev">&lsaquo;</a>
+									<a class="carousel-control right" href="#name2-hotelCarousel" data-slide="next">&rsaquo;</a>
+								</div>
+							</div>
+						</div>
+						<div class="span7">
+							<div class="header">
+								<h3 class="title">{% trans "Mysteries by Cirque de Soleil" %}</h3>
+								<h3 class="price">{% trans "From" %}: <strong>$70.00</strong> {% trans "per Night" %}</h3>
+							</div>
+							<p>
+								{% trans "Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert." %}
+							</p>
+							<a href="#" class="btn btn-primary">{% trans "Add" %}</a>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="hotel-carousel-wrapper">
+								<div id="name3-hotelCarousel" class="carousel slide hotelCarousel">
+									<!-- Carousel items -->
+									<div class="carousel-inner">
+										<div class="active item"><a href="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" rel="name3-hotel"><img src="http://www.dubaihotel.ws/luxury/burj-al-arab-luxury-suite.jpg" alt="{% trans 'Burj Al Arab suite' %}" /></a></div>
+										<div class="item"><a href="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" rel="name3-hotel"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/220px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg" alt="{% trans 'Burj Al Arab' %}" /></a></div>
+										<div class="item"><a href="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" rel="name3-hotel"><img src="http://3.bp.blogspot.com/-yrGkcuYAlh4/Ta0qr6KsZ6I/AAAAAAAAATs/PcrhCV2_Is0/s1600/04DBurj-bed.jpg" alt="{% trans 'Burj Al Arab bed' %}"/></a></div>
+									</div>
+									<!-- Carousel nav -->
+									<a class="carousel-control left" href="#name3-hotelCarousel" data-slide="prev">&lsaquo;</a>
+									<a class="carousel-control right" href="#name3-hotelCarousel" data-slide="next">&rsaquo;</a>
+								</div>
+							</div>
+						</div>
+						<div class="span7">
+							<div class="header">
+								<h3 class="title">{% trans "Mysteries by Cirque de Soleil" %}</h3>
+								<h3 class="price">{% trans "From" %}: <strong>$70.00</strong> {% trans "per Night" %}</h3>
+							</div>
+							<p>
+								{% trans "Today, we tell about a famous natural place, the Grand Canyon. In late September, 1540, a group of Spanish explorers led by Captain Garcia Lopez de Cardenas came to a stop. For weeks they had walked north across the great southwestern American desert." %}
+							</p>
+							<a href="#" class="btn btn-primary">{% trans "Add" %}</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="itinerary_rename_modal">
+		<div class="modal-header">
+			<h3>{% trans "Rename Itinerary" %}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<div class="span12">
+					<form class="well side-signup" id="itinerary_rename_form">
+						<label>{% trans "Itinerary Name" %}: <input type="text" class="span12" placeholder="" name="name" /></label>
+						<button type="submit" class="btn">{% trans "Rename" %}</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+		</div>
+	</div>
+{% endblock content %}
+>>>>>>> c2679849ad07c440a22c540a7219e08ba52ad2d1
